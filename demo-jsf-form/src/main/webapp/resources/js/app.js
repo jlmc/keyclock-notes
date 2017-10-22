@@ -4,11 +4,8 @@ $(document).ready(function() {
 		
 		$('.js-sidebar').toggleClass('is-toggled');
 		$('.js-content').toggleClass('is-toggled');
-		
-		
-		
+
 	});
-	
 	
 	var theId = $('#selectedMenuItem').val();
 	$('#'+theId).toggleClass('is-selected');

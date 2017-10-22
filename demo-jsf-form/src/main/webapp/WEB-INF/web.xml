@@ -20,7 +20,7 @@
 
     <login-config>
         <auth-method>KEYCLOAK</auth-method>
-        <realm-name>demo-jsf-form</realm-name>
+        <realm-name>realm_of_demos</realm-name>
     </login-config>
 
     <security-role>
