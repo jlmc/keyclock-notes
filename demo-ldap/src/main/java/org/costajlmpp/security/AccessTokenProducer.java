@@ -38,6 +38,8 @@ public class AccessTokenProducer {
 
         String jwtAcceassToken = kp.getKeycloakSecurityContext().getTokenString();
 
+        System.out.println(" ----- " + jwtAcceassToken);
+
         Map<String, Object> otherClaims = token.getOtherClaims();
 
         String email = token.getEmail();
