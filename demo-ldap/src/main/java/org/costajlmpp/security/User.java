@@ -1,5 +1,10 @@
 package org.costajlmpp.security;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
 
     private String userName;
@@ -7,6 +12,9 @@ public class User {
     private String email;
     private String phone;
     private String address;
+
+
+    private Set<String> roles = new HashSet<>();
 
     private User (){}
 
@@ -30,18 +38,23 @@ public class User {
         return address;
     }
 
+    public Set<String> getRoles() {
+        return Collections.unmodifiableSet(roles);
+    }
+
+    static Builder builder() {
+        return new Builder();
+    }
+
     static class Builder {
         private String userName;
         private String name;
         private String email;
         private String phone;
         private String address;
+        private Set<String> roles = new HashSet<>();
 
         private Builder() {}
-
-        static Builder builder() {
-            return new Builder();
-        }
 
         public User build() {
             final User user = new User();
@@ -51,6 +64,7 @@ public class User {
             user.email = this.email;
             user.phone = this.phone;
             user.address = this.address;
+            user.roles.addAll(this.roles);
 
             return user;
         }
@@ -77,6 +91,11 @@ public class User {
 
         public Builder userName(String userName) {
             this.userName = userName;
+            return this;
+        }
+
+        public Builder addRole(String... roles) {
+            this.roles.addAll(Arrays.asList(roles));
             return this;
         }
 

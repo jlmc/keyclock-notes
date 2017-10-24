@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -44,11 +45,14 @@ public class AccessTokenProducer {
         String username = token.getPreferredUsername();
         String phone = (String) otherClaims.getOrDefault("phone", "");
 
-        return User.Builder.builder()
+        final Set<String> roles = kp.getKeycloakSecurityContext().getToken().getRealmAccess().getRoles();
+
+        return User.builder()
                 .name(fullName)
                 .userName(username)
                 .email(email)
                 .phone(phone)
+                .addRole(roles.toArray(new String[0]))
                 .build();
     }
 

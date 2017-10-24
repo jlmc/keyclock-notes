@@ -1,21 +1,15 @@
 package org.costajlmpp.presentation;
 
 import org.costajlmpp.security.AuthUser;
-import org.costajlmpp.security.Role;
 import org.costajlmpp.security.User;
 
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 @Model
 public class ClientPresenter {
@@ -36,19 +30,9 @@ public class ClientPresenter {
         return user;
     }
 
-    public List<String> getRoles() {
-        final List<String> roles = Stream.of(Role.values()).map(this::role)
-                .flatMap(o -> o.map(Stream::of).orElse(Stream.empty()))
-                .collect(Collectors.toList());
+    public Set<String> getRoles() {
 
-        return roles;
-    }
-
-    private Optional<String> role (Role role) {
-        if (request.isUserInRole(role.toString())) {
-            return Optional.of(role.toString());
-        }
-        return Optional.empty();
+        return user.getRoles();
     }
 
     public RedirectView logout() {
