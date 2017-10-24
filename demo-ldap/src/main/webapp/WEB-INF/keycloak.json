@@ -1,0 +1,7 @@
+{
+  "realm": "ldap_realm",
+  "auth-server-url": "http://localhost:8180/auth",
+  "ssl-required": "external",
+  "resource": "demo-ldap",
+  "public-client": true
+}

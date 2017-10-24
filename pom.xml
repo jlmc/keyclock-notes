@@ -10,7 +10,8 @@
 
     <modules>
         <module>demo-jsf-form</module>
-    <module>demo-jaxrs</module>
-    <module>demo-jee-html5</module>
-  </modules>
+        <module>demo-jaxrs</module>
+        <module>demo-jee-html5</module>
+        <module>demo-ldap</module>
+    </modules>
 </project>

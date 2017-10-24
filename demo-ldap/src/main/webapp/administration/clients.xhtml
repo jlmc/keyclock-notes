@@ -1,0 +1,68 @@
+<!DOCTYPE html >
+
+<ui:composition template="/WEB-INF/templates/systemlayout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="content">
+
+        <h1 class="aw-page-title">Client Details</h1>
+
+        <p:messages/>
+
+
+        <div class="fluid">
+            <h3><p:outputLabel value="${clientPresenter.principal}"/></h3>
+        </div>
+
+        <div class="fluid">
+            <p:panelGrid styleClass="ui-fluid" columns="2">
+                <p:outputLabel value="Username"/>
+                #{clientPresenter.user.userName}
+
+                <p:outputLabel value="Full Name"/>
+                #{clientPresenter.user.name}
+
+                <p:outputLabel value="Email"/>
+                #{clientPresenter.user.email}
+
+                <p:outputLabel value="Phone"/>
+                #{clientPresenter.user.phone}
+            </p:panelGrid>
+
+        </div>
+
+
+        <div class="ui-fluid">
+
+            <p:dataList value="#{clientPresenter.roles}" var="r" >
+                <f:facet name="header">
+                    User Roles
+                </f:facet>
+                #{r}
+            </p:dataList>
+
+        </div>
+
+        <div>
+            <h:form>
+                <p:commandButton value="Logou" action="${clientPresenter.logout}" ajax="false"/>
+            </h:form>
+
+        </div>
+
+    </ui:define>
+
+    <ui:define name="menuItemSelected">
+
+        <input type="hidden" id="selectedMenuItem" value="_clients"/>
+    </ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,49 @@
+dn: ou=SWG, dc=example, dc=com
+ou: SWG
+objectClass: top
+objectClass: organizationalUnit
+
+dn: ou=users,ou=SWG, dc=example, dc=com
+ou: users
+objectClass: top
+objectClass: organizationalUnit
+
+dn: uid=steves,ou=users,ou=SWG, dc=example, dc=com
+uid: steves
+userPassword:: hello123
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+sn: Wiley
+cn: Steves
+
+dn: uid=PortalAdmin,ou=users,ou=SWG, dc=example, dc=com
+userPassword:: hello123
+uid: PortalAdmin
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+sn: Poon
+cn: Chuck
+
+dn: uid=william,ou=users,ou=SWG, dc=example, dc=com
+userPassword:: hello123
+uid: william
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+sn: Hanes
+cn: William
+
+dn: uid=lucy,ou=users,ou=SWG, dc=example, dc=com
+userPassword:: hello123
+uid: lucy
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+sn: Haye
+cn: Lucy
