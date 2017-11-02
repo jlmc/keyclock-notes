@@ -37,6 +37,25 @@ services:
       - ey-network
 
 
+  wildfly:
+    build:
+#      dockerfile: docker/wildfly/Dockerfile
+#      context: .
+      dockerfile: Dockerfile
+      context: ./docker/wildfly/
+    image: ey/wildfly
+    container_name: ey-wildfly
+#    volumes:
+#      - ./docker/wildfly:opt/jboss/wildfly/customization
+    ports:
+      - "8180:8080"
+      - "10090:9990"
+      - "543:9990"
+    depends_on:
+      - keyclock-postgres
+      - keyclock
+    networks:
+      - ey-network
 
 
 #volumes:
