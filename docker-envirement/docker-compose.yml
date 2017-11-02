@@ -1,0 +1,53 @@
+version: '3'
+services:
+
+  keyclock-db:
+    image: postgres:10.0
+    container_name: ey-keyclock-db
+    environment:
+      - POSTGRES_DB=keyclockdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5442:5432"
+    networks:
+      - ey-network
+
+  keyclock:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT_5432_TCP_ADDR=ey-keyclock-db
+      - POSTGRES_DATABASE=keyclockdb
+      - POSTGRES_PORT_5432_TCP_PORT=5432
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    image: jboss/keycloak:3.3.0.Final
+    container_name: ey-keyclock
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+      - "443:443"
+    depends_on:
+      - keyclock-db
+    networks:
+      - ey-network
+
+  wildfly:
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/wildfly/
+    image: ey/wildfly
+    container_name: ey-wildfly
+    ports:
+      - "8180:8080"
+      - "10090:9990"
+      - "543:9990"
+    depends_on:
+      - keyclock
+    networks:
+      - ey-network
+
+networks:
+  ey-network:
+    driver: bridge

@@ -5,6 +5,7 @@ http://localhost:8180/auth/
 Apos o user criado 
 http://localhost:8180/auth/realms/realm_name/account
 http://localhost:8180/auth/realms/realm_of_demos/account
+http://localhost:8180/auth/realms/Ldap_realm/account
 
 
 # LOGOUT
