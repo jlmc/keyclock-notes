@@ -33,6 +33,20 @@ services:
     networks:
       - ey-network
 
+  ey-db:
+    image: postgres:10.0
+    container_name: ey-db
+    environment:
+      - POSTGRES_DB=eydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - ey-network
+
+
+
   wildfly:
     build:
       dockerfile: Dockerfile
@@ -44,6 +58,7 @@ services:
       - "10090:9990"
       - "543:9990"
     depends_on:
+      - ey-db
       - keyclock
     networks:
       - ey-network
