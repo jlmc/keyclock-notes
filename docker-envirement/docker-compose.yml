@@ -1,0 +1,47 @@
+version: '3'
+services:
+  keyclock-postgres:
+    build:
+      dockerfile: docker/keyclock-postgres-data-base/Dockerfile
+      context: .
+    image: ey/keyclock-postgres-data-base
+    container_name: ey-keyclock-postgres-data-base
+    volumes:
+      - ./docker/keyclock-postgres-data-base/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5442:5432"
+    networks:
+      - ey-network
+
+  keyclock:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT_5432_TCP_ADDR=ey-keyclock-postgres-data-base
+      - POSTGRES_DATABASE=keyclockdb
+      - POSTGRES_PORT_5432_TCP_PORT=5432
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    build:
+      dockerfile: docker/keyclock/Dockerfile
+      context: .
+    image: ey/keyclock
+    container_name: ey-keyclock
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+      - "443:443"
+    depends_on:
+      - keyclock-postgres
+    networks:
+      - ey-network
+
+
+
+
+#volumes:
+#  docker/keyclock-postgres-data-base/docker-entrypoint-initdb.d:
+
+networks:
+  ey-network:
+    driver: bridge
