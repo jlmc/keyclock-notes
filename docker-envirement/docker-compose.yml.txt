@@ -1,9 +1,9 @@
 version: '3'
 services:
 
-  keyclock-db:
+  keyclock-data-base:
     image: postgres:10.0
-    container_name: ey-keyclock-db
+    container_name: ey-keyclock-postgres-data-base
     environment:
       - POSTGRES_DB=keyclockdb
       - POSTGRES_USER=postgres
@@ -13,32 +13,54 @@ services:
     networks:
       - ey-network
 
+
+#  keyclock-postgres:
+#    build:
+#      dockerfile: docker/keyclock-postgres-data-base/Dockerfile
+#      context: .
+#    image: ey/keyclock-postgres-data-base
+#    container_name: ey-keyclock-postgres-data-base
+#    volumes:
+#      - ./docker/keyclock-postgres-data-base/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+#    ports:
+#      - "5442:5432"
+#    networks:
+#      - ey-network
+
   keyclock:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_PORT_5432_TCP_ADDR=ey-keyclock-db
+      - POSTGRES_PORT_5432_TCP_ADDR=ey-keyclock-postgres-data-base
       - POSTGRES_DATABASE=keyclockdb
       - POSTGRES_PORT_5432_TCP_PORT=5432
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
-    image: jboss/keycloak:3.3.0.Final
+    build:
+      dockerfile: docker/keyclock/Dockerfile
+      context: .
+    image: ey/keyclock
     container_name: ey-keyclock
     ports:
       - "8080:8080"
       - "9990:9990"
       - "443:443"
     depends_on:
-      - keyclock-db
+      - keyclock-data-base
     networks:
       - ey-network
 
+
   wildfly:
     build:
+#      dockerfile: docker/wildfly/Dockerfile
+#      context: .
       dockerfile: Dockerfile
       context: ./docker/wildfly/
     image: ey/wildfly
     container_name: ey-wildfly
+#    volumes:
+#      - ./docker/wildfly:opt/jboss/wildfly/customization
     ports:
       - "8180:8080"
       - "10090:9990"
@@ -47,6 +69,10 @@ services:
       - keyclock
     networks:
       - ey-network
+
+
+#volumes:
+#  docker/keyclock-postgres-data-base/docker-entrypoint-initdb.d:
 
 networks:
   ey-network:
