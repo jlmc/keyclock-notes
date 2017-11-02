@@ -1,2 +1,3 @@
 module add --name=org.postgresql --slot=main --resources=/opt/jboss/postgresql-42.0.0.jar --dependencies=javax.api,javax.transaction.api
 /subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgresql",driver-class-name=org.postgresql.Driver)
+data-source add --jndi-name=java:jboss/datasources/eyDS --name=eyDSPool --connection-url=jdbc:postgresql://ey-db:5432/eydb --driver-name=postgres --user-name=postgres --password=postgres
